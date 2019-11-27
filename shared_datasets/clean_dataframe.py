@@ -171,6 +171,9 @@ class CleanDataframe:
         troll = cleaned_df[cleaned_df['ConvertedComp'] > 500000].index
         cleaned_df.drop(troll, inplace=True)
 
+        troll_1 = cleaned_df[cleaned_df['ConvertedComp'] == 0.0].index
+        cleaned_df.drop(troll_1, inplace=True)
+
         return cleaned_df
 
     def create_dummies(self, cleaned_df):

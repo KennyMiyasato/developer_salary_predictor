@@ -44,6 +44,27 @@ def sm_OLS(x_values,y_values):
     #print(results.summary())
     return model_performance,variables,outcomes
 
+def ols_recursion(x_values,y_values):
+
+    temp_performance,temp_variables,temp_outcomes = sm_OLS(x_values,y_values)
+    print(len((temp_variables.index.tolist())))
+
+    to_drop = temp_variables[temp_variables['P>|t|']>.05].index.tolist()
+    try:
+        to_drop.remove('const')
+    except:
+        to_drop
+
+    print(len(to_drop))
+    if len(to_drop)>0:
+        print('flip')
+        x_values.drop(columns=to_drop,inplace=True)
+        ols_recursion(x_values,y_values)
+    else:
+        print('done')
+    return sm_OLS(x_values,y_values)
+    
+
 def train_test(model,x,y):
     X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
     #train_errors, val_errors = [],[]

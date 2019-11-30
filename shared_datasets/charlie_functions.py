@@ -47,7 +47,7 @@ def sm_OLS(x_values,y_values):
 def ols_recursion(x_values,y_values):
 
     temp_performance,temp_variables,temp_outcomes = sm_OLS(x_values,y_values)
-    print(len((temp_variables.index.tolist())))
+    print("predictors used: ", len((temp_variables.index.tolist())))
 
     to_drop = temp_variables[temp_variables['P>|t|']>.05].index.tolist()
     try:
@@ -55,15 +55,15 @@ def ols_recursion(x_values,y_values):
     except:
         to_drop
 
-    print(len(to_drop))
+    print("Predictors to drop: ", len(to_drop))
     if len(to_drop)>0:
-        print('flip')
+        print('Running regression with new subset of predictors...')
         x_values.drop(columns=to_drop,inplace=True)
         ols_recursion(x_values,y_values)
     else:
-        print('done')
+        print('Complete. No coefficients with P-value greater than .05 remain')
     return sm_OLS(x_values,y_values)
-    
+
 
 def train_test(model,x,y):
     X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)

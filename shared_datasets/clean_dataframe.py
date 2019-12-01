@@ -168,10 +168,10 @@ class CleanDataframe:
         cleaned_df.drop(over_100_hrs, inplace=True)
 
         # Cleaning ConvertedComp column
-        troll = cleaned_df[cleaned_df['ConvertedComp'] > 500000].index
+        troll = cleaned_df[cleaned_df['ConvertedComp'] > 250000].index
         cleaned_df.drop(troll, inplace=True)
 
-        troll_1 = cleaned_df[cleaned_df['ConvertedComp'] < 1000].index
+        troll_1 = cleaned_df[cleaned_df['ConvertedComp'] < 10000].index
         cleaned_df.drop(troll_1, inplace=True)
 
         return cleaned_df
